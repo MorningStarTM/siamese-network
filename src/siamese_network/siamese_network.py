@@ -32,11 +32,17 @@ class SiameseNet(nn.Module):
                 nn.Linear(16, 2)
             )
 
-    def forward(self, inputs):
+    def forward_dub(self, inputs):
         x = inputs
         x = self.cnn1(x)
         x = x.view(x.size(0), -1)  # Flatten the tensor
         x = self.lin(x)
         return x
+    
+    def forward(self, input1, input2):
+        op1 = self.forward_dub(input1)
+        op2 = self.forward_dub(input2)
+        return op1, op2
+    
     
 
